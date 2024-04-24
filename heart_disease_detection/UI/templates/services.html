@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Untree.co" />
+  <link rel="shortcut icon" href="../static/favicon.png" />
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap5" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../static/fonts/icomoon/style.css" />
+  <link rel="stylesheet" href="../static/fonts/flaticon/font/flaticon.css" />
+
+  <link rel="stylesheet" href="../static/css/tiny-slider.css" />
+  <link rel="stylesheet" href="../static/css/aos.css" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #444444;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hero {
+      background-image: url('../static/images/dd.png');
+      /* height: 500px; */
+      background-size: cover;
+
+    }
+
+    .wizard-content-left {
+      background-blend-mode: darken;
+      background-color: rgba(0, 0, 0, 0.45);
+      background-image: url("https://i.ibb.co/X292hJF/form-wizard-bg-2.jpg");
+      background-position: center center;
+      background-size: cover;
+      height: 100vh;
+      padding: 30px;
+    }
+
+    .wizard-content-left h1 {
+      color: #ffffff;
+      font-size: 38px;
+      font-weight: 600;
+      padding: 12px 20px;
+      text-align: center;
+    }
+
+    .form-wizard {
+      color: #888888;
+      padding: 30px;
+    }
+
+    .form-wizard .wizard-form-radio {
+      display: inline-block;
+      margin-left: 5px;
+      position: relative;
+    }
+
+    .form-wizard .wizard-form-radio input[type="radio"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      appearance: none;
+      background-color: #dddddd;
+      height: 25px;
+      width: 25px;
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .form-wizard .wizard-form-radio input[type="radio"]:focus {
+      outline: 0;
+    }
+
+    .form-wizard .wizard-form-radio input[type="radio"]:checked {
+      background-color: #fb1647;
+    }
+
+    .form-wizard .wizard-form-radio input[type="radio"]:checked::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      background-color: #ffffff;
+      border-radius: 50%;
+      left: 1px;
+      right: 0;
+      margin: 0 auto;
+      top: 8px;
+    }
+
+    .form-wizard .wizard-form-radio input[type="radio"]:checked::after {
+      content: "";
+      display: inline-block;
+      animation: click-radio-wave 0.65s;
+      -moz-animation: click-radio-wave 0.65s;
+      animation: click-radio-wave 0.65s;
+      background: #000000;
+      content: '';
+      display: block;
+      position: relative;
+      z-index: 100;
+      border-radius: 50%;
+    }
+
+    .form-wizard .wizard-form-radio input[type="radio"]~label {
+      padding-left: 10px;
+      cursor: pointer;
+    }
+
+    .form-wizard .form-wizard-header {
+      text-align: center;
+    }
+
+    .form-wizard .form-wizard-next-btn,
+    .form-wizard .form-wizard-previous-btn,
+    .form-wizard .form-wizard-submit {
+      background-color: #260c6d;
+      color: #ffffff;
+      display: inline-block;
+      min-width: 100px;
+      min-width: 120px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .form-wizard .form-wizard-next-btn:hover,
+    .form-wizard .form-wizard-next-btn:focus,
+    .form-wizard .form-wizard-previous-btn:hover,
+    .form-wizard .form-wizard-previous-btn:focus,
+    .form-wizard .form-wizard-submit:hover,
+    .form-wizard .form-wizard-submit:focus {
+      color: #ffffff;
+      opacity: 0.6;
+      text-decoration: none;
+    }
+
+    .form-wizard .wizard-fieldset {
+      display: none;
+    }
+
+    .form-wizard .wizard-fieldset.show {
+      display: block;
+    }
+
+    .form-wizard .wizard-form-error {
+      display: none;
+      background-color: #d70b0b;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      width: 100%;
+    }
+
+    .form-wizard .form-wizard-previous-btn {
+      background-color: #fb1647;
+    }
+
+    .form-wizard .form-control {
+      font-weight: 300;
+      height: auto !important;
+      padding: 15px;
+      color: #888888;
+      background-color: #f1f1f1;
+      border: none;
+    }
+
+    .form-wizard .form-control:focus {
+      box-shadow: none;
+    }
+
+    .form-wizard .form-group {
+      position: relative;
+      margin: 25px 0;
+    }
+
+    .form-wizard .wizard-form-text-label {
+      position: absolute;
+      left: 10px;
+      top: 16px;
+      transition: 0.2s linear all;
+    }
+
+    .form-wizard .focus-input .wizard-form-text-label {
+      color: #189fb1;
+      top: -18px;
+      transition: 0.2s linear all;
+      font-size: 12px;
+    }
+
+    .form-wizard .form-wizard-steps {
+      margin: 30px 0;
+    }
+
+    .form-wizard .form-wizard-steps li {
+      width: 25%;
+      float: left;
+      position: relative;
+    }
+
+    .form-wizard .form-wizard-steps li::after {
+      background-color: #f3f3f3;
+      content: "";
+      height: 5px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      border-bottom: 1px solid #dddddd;
+      border-top: 1px solid #dddddd;
+    }
+
+    .form-wizard .form-wizard-steps li span {
+      background-color: #dddddd;
+      border-radius: 50%;
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      position: relative;
+      text-align: center;
+      width: 40px;
+      z-index: 1;
+    }
+
+    .form-wizard .form-wizard-steps li:last-child::after {
+      width: 50%;
+    }
+
+    .form-wizard .form-wizard-steps li.active span,
+    .form-wizard .form-wizard-steps li.activated span {
+      background-color: #d65470;
+      color: #ffffff;
+    }
+
+    .form-wizard .form-wizard-steps li.active::after,
+    .form-wizard .form-wizard-steps li.activated::after {
+      background-color: #d65470;
+      left: 50%;
+      width: 50%;
+      border-color: #d65470;
+    }
+
+    .form-wizard .form-wizard-steps li.activated::after {
+      width: 100%;
+      border-color: #d65470;
+    }
+
+    .form-wizard .form-wizard-steps li:last-child::after {
+      left: 0;
+    }
+
+    .form-wizard .wizard-password-eye {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    @keyframes click-radio-wave {
+      0% {
+        width: 25px;
+        height: 25px;
+        opacity: 0.35;
+        position: relative;
+      }
+
+      100% {
+        width: 60px;
+        height: 60px;
+        margin-left: -15px;
+        margin-top: -15px;
+        opacity: 0.0;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .wizard-content-left {
+        height: auto;
+      }
+    }
+  </style>
+
+  <title>
+    Heart Disease Detection
+  </title>
+</head>
+
+<body>
+  <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close">
+        <span class="icofont-close js-menu-toggle"></span>
+      </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
+
+  <nav class="site-nav">
+    <div class="container">
+      <div class="menu-bg-wrap">
+        <div class="site-navigation">
+          <a href="/root" class="logo m-0 float-start">HEART DISEASE DETECTION</a>
+
+          <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+            <li class="active"><a href="/root">HOME</a></li>
+            <li class="has-children">
+              <a>OUR SERVICES</a>
+              <ul class="dropdown">
+                <li><a href="/single">DISEASE DETECTION</a></li>
+
+              </ul>
+            </li>
+            <li><a href="/about">ABOUT</a></li>
+            <li><a href="/contact">CONTACT US</a></li>
+            <li><a href="/logout">LOGOUT</a></li>
+          </ul>
+
+          <a href="#"
+            class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+            data-toggle="collapse" data-target="#main-navbar">
+            <span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero page-inner overlay">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-lg-9 text-center mt-5">
+          <h1 class="heading" data-aos="fade-up">Services</h1>
+
+          <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+            <ol class="breadcrumb text-center justify-content-center">
+              <li class="breadcrumb-item"><a href="/root">Home</a></li>
+              <li class="breadcrumb-item active text-white-50" aria-current="page">
+                Services
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section bg-light">
+    <div class="container">
+      <section class="container">
+        <div class="container">
+          <div class="container">
+            <div class="form-wizard">
+
+              <form id="fileUploadForm">
+                <div class="form-wizard-header">
+
+                  <ul class="list-unstyled form-wizard-steps clearfix">
+                    <li style="color: #000000;" class="active"><span>1</span></li>
+                    <li style="color: #000000;"><span>2</span></li>
+                    <li style="color: #000000;"><span>3</span></li>
+                    <li style="color: #000000;"><span>4</span></li>
+                  </ul>
+                </div>
+                <fieldset class="wizard-fieldset show">
+                  <h5>IDENTITY DETAILS</h5>
+                  <br>
+                  <h6 style="color: #000000;">NAME OF THE PERSON</h6>
+
+                  <div class="form-group">
+                    <input type="text" class="form-control wizard-required" id="fname" name="fname" required>
+                    <label for="fname" class="wizard-form-text-label" style="color: #000000;">
+                      Full Name </label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+
+
+
+                  <h6 style="color: #000000;">AGE OF PERSON</h6>
+                  <div class="form-group">
+                    <input type="number" class="form-control wizard-required" id="Age" name="Age" required>
+                    <label for="fname" class="wizard-form-text-label" style="color: #000000;">Enter Age In Years</label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+
+
+
+                  <div class="form-group" style="color: #000000;">
+                   SELECT GENDER
+                    <div class="wizard-form-radio">
+                      <input name="option" id="Male" type="radio" value="1">
+                      <label style="color: #000000;" for="radio1">Male</label>
+                    </div>
+                    <div class="wizard-form-radio">
+                      <input name="option" id="Female" type="radio" value="0">
+                      <label style="color: #000000;" for="radio2">Female</label>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group clearfix">
+                    <a href="javascript:;" class="form-wizard-next-btn float-right">Next</a>
+                  </div>
+                </fieldset>
+
+
+
+                <fieldset class="wizard-fieldset">
+                  <h5>DETAILS REQUIRED</h5>
+                  <h6 style="color: #000000;">BLOOD PRESSURE(in mm Hg on admission to the hospital)</h6>
+                  <div class="form-group">
+                    <input type="email" class="form-control wizard-required" id="trestbps" name="trestbps" required>
+                    <label style="color: #000000;" for="email" class="wizard-form-text-label">Blood Pressure</label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+                  <h6 style="color: #000000;">SERUM CHOLESTROL IN MG/DL</h6>
+                  <div class="form-group">
+                    <input type="number" class="form-control wizard-required" id="chol" name="chol" required>
+                    <label style="color: #000000;" for="phone" class="wizard-form-text-label">Serum Cholestoral</label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+
+
+                  <div class="form-group" style="color: #000000;">
+                    Are you currently experiencing any chest discomfort or pain?
+                    <div class="wizard-form-radio">
+                      <input name="option1" id="Yes" type="radio" value="1">
+                      <label style="color: #000000;" for="radio1">Yes</label>
+                    </div>
+                    <div class="wizard-form-radio">
+                      <input name="option1" id="No" type="radio" value="0">
+                      <label style="color: #000000;" for="radio2">No</label>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group clearfix">
+                    <a href="javascript:;" class="form-wizard-previous-btn float-left">Previous</a>
+                    <a href="javascript:;" class="form-wizard-next-btn float-right">Next</a>
+                  </div>
+                </fieldset>
+
+
+                <fieldset class="wizard-fieldset">
+                  <h5>HEART RATES </h5>
+                  <div class="form-group">
+                    <input type="text" class="form-control wizard-required" id="thalach" name="thalach">
+                    <label style="color: #000000;" for="bname" class="wizard-form-text-label">Maximum Heart Rate
+                      Achieved</label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+
+                  <div class="form-group" style="color: #000000;">
+                    What action would you take if a patient's fasting blood sugar level is consistently above 120 mg/dl?
+                    <div class="wizard-form-radio">
+                      <input name="option2" id="true" type="radio" value="1">
+                      <label style="color: #000000;" for="radio1">True</label>
+                    </div>
+                    <div class="wizard-form-radio">
+                      <input name="option2" id="false" type="radio" value="0">
+                      <label style="color: #000000;" for="radio2">False</label>
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="form-group clearfix">
+                    <a href="javascript:;" class="form-wizard-previous-btn float-left">Previous</a>
+                    <a href="javascript:;" class="form-wizard-next-btn float-right">Next</a>
+                  </div>
+                </fieldset>
+
+                <fieldset class="wizard-fieldset">
+
+                  <div class="form-group">
+                    <select class="form-control wizard-required" id="slope" name="slope">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                    <label style="color: #000000;" for="bname" class="wizard-form-text-label">How is the slope of the peak assessed during a medical examination?</label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <select class="form-control wizard-required" id="ca" name="ca">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                    <label style="color: #000000;" for="bname" class="wizard-form-text-label">What is the number of major vessels (0-3) that are colored by fluoroscopy?</label>
+                    <div class="wizard-form-error"></div>
+                  </div>
+
+                  <div class="form-group" style="color: #000000;">
+                    Do you experience chest pain or discomfort during physical activity, such as exercise or strenuous activities?
+                    <div class="wizard-form-radio">
+                      <input name="option3" id="Yes" type="radio" value="1">
+                      <label style="color: #000000;" for="radio1">Yes</label>
+                    </div>
+                    <div class="wizard-form-radio">
+                      <input name="option3" id="No" type="radio" value="0">
+                      <label style="color: #000000;" for="radio2">No</label>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group clearfix">
+                    <a href="javascript:;" class="form-wizard-previous-btn float-left">Previous</a>
+                    <a href="javascript" id="btnSubmit" class="form-wizard-submit float-right">Submit</a>
+                  </div>
+                </fieldset>
+              </form>
+
+
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <br>
+
+    <div class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Contact</h3>
+              <address>DY PATIL UNIVERSITY NEHRUL, NAVI MUMBAI</address>
+              <ul class="list-unstyled links">
+                <li><a href="tel://11234567890">+8483836528</a></li>
+                <li><a href="tel://11234567890">+9987876330</a></li>
+                <li>
+                  <a href="mailto:info@mydomain.com">amruta.ahinave@gmail.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Sources</h3>
+              <ul class="list-unstyled float-start links">
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Vision</a></li>
+                <li><a href="#">Mission</a></li>
+
+              </ul>
+              <ul class="list-unstyled float-start links">
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <div class="widget">
+              <h3>Links</h3>
+              <ul class="list-unstyled links">
+                <li><a href="#">Our Vision</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Contact us</a></li>
+              </ul>
+
+              <ul class="list-unstyled social">
+                <li>
+                  <a href="#"><span class="icon-instagram"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-twitter"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-facebook"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-linkedin"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-pinterest"></span></a>
+                </li>
+                <li>
+                  <a href="#"><span class="icon-dribbble"></span></a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.widget -->
+          </div>
+          <!-- /.col-lg-4 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <!-- 
+              **==========
+              NOTE: 
+              Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
+              **==========
+            -->
+
+            <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              . All Rights Reserved. &mdash; Designed with love by
+              <a href="https://untree.co">Untree.co</a>
+              <!-- License information: https://untree.co/license/ -->
+            </p>
+            <div>
+              Distributed by
+              <a href="#" target="_blank">themewagon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.site-footer -->
+
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/tiny-slider.js"></script>
+    <script src="../static/js/aos.js"></script>
+    <script src="../static/js/navbar.js"></script>
+    <script src="../static/js/counter.js"></script>
+    <script src="../static/js/custom.js"></script>
+    <script src="../static/js/jquery-3.3.1.js"></script>
+
+    <script>
+      $(document).ready(function () {
+
+        $("#btnSubmit").click(function (event) {
+          event.preventDefault();
+          var form = $('#fileUploadForm')[0];
+          var data = new FormData(form);
+          console.log(data)
+          // $("#btnSubmit").prop("disabled", true);
+          $.ajax({
+            type: 'POST',
+            enctype: 'multipart/form-data',
+            url: "single",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (response) {
+              swal({
+                title: response.response_2,
+                text: response.response_1, // Use the data you passed from Flask here
+                icon: "success",
+                button: "OK",
+              }).then((value) => {
+                if (value) {
+                    // Make an AJAX request to Flask backend
+                    fetch('/fetch_data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({value: response.response_1}), // Pass the value to Flask
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+
+                      let result = JSON.parse(data.result);
+
+                        // Show the fetched data in a new swal alert
+                        swal({
+                            title: "Medication",
+                            text: `Result: ${result}`,
+                            icon: "success",
+                            button: "OK",
+                        }).then((value) => {
+                          if (value) {
+                              // Redirect to a new URL
+                              window.location.href = '/single';
+                          }
+                      });
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+
+            }
+
+            });
+        });
+      });
+    </script>
+
+
+
+    <script>
+      jQuery(document).ready(function () {
+        // click on next button
+        jQuery('.form-wizard-next-btn').click(function () {
+          var parentFieldset = jQuery(this).parents('.wizard-fieldset');
+          var currentActiveStep = jQuery(this).parents('.form-wizard').find('.form-wizard-steps .active');
+          var next = jQuery(this);
+          var nextWizardStep = true;
+          parentFieldset.find('.wizard-required').each(function () {
+            var thisValue = jQuery(this).val();
+
+            if (thisValue == "") {
+              jQuery(this).siblings(".wizard-form-error").slideDown();
+              nextWizardStep = false;
+            }
+            else {
+              jQuery(this).siblings(".wizard-form-error").slideUp();
+            }
+          });
+          if (nextWizardStep) {
+            next.parents('.wizard-fieldset').removeClass("show", "400");
+            currentActiveStep.removeClass('active').addClass('activated').next().addClass('active', "400");
+            next.parents('.wizard-fieldset').next('.wizard-fieldset').addClass("show", "400");
+            jQuery(document).find('.wizard-fieldset').each(function () {
+              if (jQuery(this).hasClass('show')) {
+                var formAtrr = jQuery(this).attr('data-tab-content');
+                jQuery(document).find('.form-wizard-steps .form-wizard-step-item').each(function () {
+                  if (jQuery(this).attr('data-attr') == formAtrr) {
+                    jQuery(this).addClass('active');
+                    var innerWidth = jQuery(this).innerWidth();
+                    var position = jQuery(this).position();
+                    jQuery(document).find('.form-wizard-step-move').css({ "left": position.left, "width": innerWidth });
+                  } else {
+                    jQuery(this).removeClass('active');
+                  }
+                });
+              }
+            });
+          }
+        });
+        //click on previous button
+        jQuery('.form-wizard-previous-btn').click(function () {
+          var counter = parseInt(jQuery(".wizard-counter").text());;
+          var prev = jQuery(this);
+          var currentActiveStep = jQuery(this).parents('.form-wizard').find('.form-wizard-steps .active');
+          prev.parents('.wizard-fieldset').removeClass("show", "400");
+          prev.parents('.wizard-fieldset').prev('.wizard-fieldset').addClass("show", "400");
+          currentActiveStep.removeClass('active').prev().removeClass('activated').addClass('active', "400");
+          jQuery(document).find('.wizard-fieldset').each(function () {
+            if (jQuery(this).hasClass('show')) {
+              var formAtrr = jQuery(this).attr('data-tab-content');
+              jQuery(document).find('.form-wizard-steps .form-wizard-step-item').each(function () {
+                if (jQuery(this).attr('data-attr') == formAtrr) {
+                  jQuery(this).addClass('active');
+                  var innerWidth = jQuery(this).innerWidth();
+                  var position = jQuery(this).position();
+                  jQuery(document).find('.form-wizard-step-move').css({ "left": position.left, "width": innerWidth });
+                } else {
+                  jQuery(this).removeClass('active');
+                }
+              });
+            }
+          });
+        });
+        //click on form submit button
+        jQuery(document).on("click", ".form-wizard .form-wizard-submit", function () {
+          var parentFieldset = jQuery(this).parents('.wizard-fieldset');
+          var currentActiveStep = jQuery(this).parents('.form-wizard').find('.form-wizard-steps .active');
+          parentFieldset.find('.wizard-required').each(function () {
+            var thisValue = jQuery(this).val();
+            if (thisValue == "") {
+              jQuery(this).siblings(".wizard-form-error").slideDown();
+            }
+            else {
+              jQuery(this).siblings(".wizard-form-error").slideUp();
+            }
+          });
+        });
+
+
+        // focus on input field check empty or not
+        jQuery(".form-control").on('focus', function () {
+          var tmpThis = jQuery(this).val();
+          if (tmpThis == '') {
+            jQuery(this).parent().addClass("focus-input");
+          }
+          else if (tmpThis != '') {
+            jQuery(this).parent().addClass("focus-input");
+          }
+        }).on('blur', function () {
+          var tmpThis = jQuery(this).val();
+          if (tmpThis == '') {
+            jQuery(this).parent().removeClass("focus-input");
+            jQuery(this).siblings('.wizard-form-error').slideDown("3000");
+          }
+          else if (tmpThis != '') {
+            jQuery(this).parent().addClass("focus-input");
+            jQuery(this).siblings('.wizard-form-error').slideUp("3000");
+          }
+        });
+      });
+
+    </script>
+
+    <script>
+      $("#selectAll").click(function () {
+        $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+      });
+
+      $("input[type=checkbox]").click(function () {
+        if (!$(this).prop("checked")) {
+          $("#selectAll").prop("checked", false);
+        }
+      });
+
+
+    </script>
+
+</body>
+
+</html>
